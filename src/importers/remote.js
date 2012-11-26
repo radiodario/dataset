@@ -11,6 +11,8 @@
   *     extract - a method to pass raw data through before handing back to parser.
   *     dataType - ajax datatype
   *     jsonp  - true if it's a jsonp request, false otherwise.
+  *     type - wether to do a post or a get request (defaults to 'GET')
+  *     postData - The post data to send with the request
   */
   Dataset.Importers.Remote = function(options) {
     options = options || {};
@@ -20,11 +22,18 @@
 
     // Default ajax request parameters
     this.params = {
-      type : "GET",
+      type : "GET", // if you define type, otherwise "get"
       url : _.isFunction(this._url) ? _.bind(this._url, this) : this._url,
       dataType : options.dataType ? options.dataType : (options.jsonp ? "jsonp" : "json"),
       callback : options.callback
     };
+
+    // support for POST requests, just define them here.
+    if (options.hasOwnProperty('postData') && options.hasOwnProperty('type')) {
+      this.params.type = options.type;
+      this.params.data = options.postData;
+    }
+
   };
 
   _.extend(Dataset.Importers.Remote.prototype, Dataset.Importers.prototype, {
