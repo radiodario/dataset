@@ -12,7 +12,7 @@
   *     dataType - ajax datatype
   *     jsonp  - true if it's a jsonp request, false otherwise.
   *     type - wether to do a post or a get request (defaults to 'GET')
-  *     postData - The post data to send with the request
+  *     data - The post data to send with the request
   */
   Dataset.Importers.Remote = function(options) {
     options = options || {};
@@ -29,9 +29,9 @@
     };
 
     // support for POST requests, just define them here.
-    if (options.hasOwnProperty('postData') && options.hasOwnProperty('type')) {
+    if (options.hasOwnProperty('data') && options.hasOwnProperty('type')) {
       this.params.type = options.type;
-      this.params.data = options.postData;
+      this.params.data = options.data;
     }
 
   };
